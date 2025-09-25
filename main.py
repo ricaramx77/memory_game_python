@@ -74,13 +74,18 @@ class MemoryGame:
         if self.cards[i1] == self.cards[i2]:
             self.matched.add(i1)
             self.matched.add(i2)
+            # Las tarjetas permanecen abiertas
             if len(self.matched) == len(self.cards):
                 messagebox.showinfo("¡Felicidades!", "¡Has encontrado todos los pares!")
                 self.root.quit()
         else:
-            self.buttons[i1].config(image=self.back_image)
-            self.buttons[i2].config(image=self.back_image)
+            # Las tarjetas se cierran (boca abajo)
+            self.root.after(500, lambda: self.close_cards(i1, i2))
         self.flipped = []
+
+    def close_cards(self, i1, i2):
+        self.buttons[i1].config(image=self.back_image)
+        self.buttons[i2].config(image=self.back_image)
 
 
 if __name__ == "__main__":
